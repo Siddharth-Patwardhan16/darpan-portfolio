@@ -1,6 +1,5 @@
-import fs from "fs"
-import path from "path"
 import { PrismaClient, ProjectCategory, ProjectStatus } from "@prisma/client"
+import { listProjectImageUrls } from "../src/lib/local-images"
 
 const prisma = new PrismaClient()
 
@@ -125,41 +124,6 @@ const projectDefinitions: ProjectDefinition[] = [
   },
 ]
 
-const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif"])
-
-function sortImageFiles(files: string[]): string[] {
-  return [...files].sort((a, b) => {
-    const aIsRender = a.startsWith("file_") || /^[0-9A-Za-z]+\.png$/i.test(a)
-    const bIsRender = b.startsWith("file_") || /^[0-9A-Za-z]+\.png$/i.test(b)
-
-    if (aIsRender !== bIsRender) {
-      return aIsRender ? -1 : 1
-    }
-
-    return a.localeCompare(b, undefined, { numeric: true })
-  })
-}
-
-function getProjectImages(slug: string): string[] {
-  const projectDir = path.join(process.cwd(), "public", "projects", slug)
-
-  if (!fs.existsSync(projectDir)) {
-    throw new Error(`Missing project assets directory: public/projects/${slug}`)
-  }
-
-  const files = sortImageFiles(
-    fs
-      .readdirSync(projectDir)
-      .filter((file) => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase())),
-  )
-
-  if (files.length === 0) {
-    throw new Error(`No images found for project: ${slug}`)
-  }
-
-  return files.map((file) => `/projects/${slug}/${encodeURIComponent(file)}`)
-}
-
 async function main() {
   const slugs = projectDefinitions.map((project) => project.slug)
 
@@ -168,7 +132,7 @@ async function main() {
   })
 
   for (const project of projectDefinitions) {
-    const images = getProjectImages(project.slug)
+    const images = listProjectImageUrls(project.slug)
     const heroImageUrl = images[0]!
 
     await prisma.project.upsert({
