@@ -47,7 +47,7 @@ export function ProjectDetailView({ slug }: ProjectDetailViewProps) {
         </div>
 
         <Link href="/projects" className="project-back-link">
-          ? All Work
+          ← All Work
         </Link>
       </section>
 
@@ -97,7 +97,7 @@ export function ProjectDetailView({ slug }: ProjectDetailViewProps) {
         {nextProject ? (
           <Link href={`/projects/${nextProject.slug}`}>
             <h2>{nextProject.title}</h2>
-            <span>?</span>
+            <span>→</span>
           </Link>
         ) : null}
       </section>

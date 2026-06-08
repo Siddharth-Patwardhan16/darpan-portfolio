@@ -108,8 +108,8 @@ export function AboutView() {
       </section>
 
       <section className="about-cta">
-        <Link href="/contact">Start a Conversation ?</Link>
-        <Link href="/projects">View All Work ?</Link>
+        <Link href="/contact">Start a Conversation →</Link>
+        <Link href="/projects">View All Work →</Link>
       </section>
     </div>
   )

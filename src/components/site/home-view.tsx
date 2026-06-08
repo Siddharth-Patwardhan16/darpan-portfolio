@@ -8,22 +8,19 @@ import { api } from "@/trpc/client"
 
 const heroSlides = [
   {
-    image:
-      "https://images.unsplash.com/photo-1770892410981-8a6650aa9ee1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1920",
-    label: "Selected Work — 2024",
-    title: "Architecture\nas Landscape",
+    image: "/projects/d02-lounge/file_000000001378720789a2a03abe334edb.png",
+    label: "Selected Work — 2026",
+    title: "D02\nLounge",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1761287347782-f3b433c0cee3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1920",
-    label: "Selected Work — 2023",
-    title: "Material\nand Memory",
+    image: "/projects/elo-cafe/file_000000000ba471f8bbe670156850f92d.png",
+    label: "Selected Work — 2026",
+    title: "Elo\nCafe",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1769328728802-0ae52ebd7c36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1920",
-    label: "Selected Work — 2022",
-    title: "Urban\nPrecision",
+    image: "/projects/kokan-home/20260410_172747.jpg.jpeg",
+    label: "Selected Work — 2026",
+    title: "Kokan\nHome",
   },
 ]
 
@@ -114,7 +111,7 @@ export function HomeView() {
         <div className="section-head">
           <p className="overline">Selected Work</p>
           <Link href="/projects" className="tiny-link">
-            View All <span>?</span>
+            View All <span>→</span>
           </Link>
         </div>
 
@@ -173,7 +170,7 @@ export function HomeView() {
         </div>
 
         <Link href="/contact" className="cta-button">
-          Get in Touch <span>?</span>
+          Get in Touch <span>→</span>
         </Link>
       </section>
     </div>
@@ -202,7 +199,7 @@ function FeaturedCard({ project, large = false }: { project: FeaturedProject; la
             {project.categoryLabel} — {project.year}
           </p>
         </div>
-        <span>?</span>
+        <span>→</span>
       </div>
     </Link>
   )

@@ -328,6 +328,7 @@ textarea {
 }
 
 .featured-media {
+  position: relative;
   overflow: hidden;
   background: var(--panel);
   aspect-ratio: 4 / 3;

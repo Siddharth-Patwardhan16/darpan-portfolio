@@ -67,7 +67,7 @@ export function ProjectsView() {
                 <span className="row-category">{project.categoryLabel}</span>
                 <span className="row-location">{project.location}</span>
                 <span className="mono row-year">{project.year}</span>
-                <span className="row-arrow">?</span>
+                <span className="row-arrow">→</span>
               </Link>
             ))}
           </motion.div>

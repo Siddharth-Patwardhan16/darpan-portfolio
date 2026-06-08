@@ -139,7 +139,7 @@ export function ContactView() {
               </label>
 
               <button type="submit" className="contact-submit" disabled={createInquiry.isPending}>
-                Send Message <span>?</span>
+                Send Message <span>→</span>
               </button>
             </form>
           )}
