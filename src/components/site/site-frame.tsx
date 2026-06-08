@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type ReactNode } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "motion/react"
@@ -36,8 +37,9 @@ export function SiteFrame({ children }: SiteFrameProps) {
     <div className="site-root">
       <header className={`site-header ${scrolled ? "site-header-scrolled" : ""}`}>
         <nav className="site-nav">
-          <Link href="/" className="site-logo">
-            {siteInfo.name}
+          <Link href="/" className="site-logo" aria-label={`${siteInfo.name} home`}>
+            <Image src={siteInfo.logo} alt={siteInfo.name} width={40} height={40} priority />
+            <span>{siteInfo.name}</span>
           </Link>
 
           <div className="site-nav-desktop">
@@ -106,6 +108,7 @@ export function SiteFrame({ children }: SiteFrameProps) {
       <footer className="site-footer">
         <div className="site-footer-grid">
           <div>
+            <Image src={siteInfo.logo} alt={siteInfo.name} width={48} height={48} className="site-footer-logo" />
             <p className="site-footer-brand">{siteInfo.name}</p>
             <p className="site-footer-copy">{siteInfo.tagline}</p>
             <p className="site-footer-copy">{siteInfo.location}</p>

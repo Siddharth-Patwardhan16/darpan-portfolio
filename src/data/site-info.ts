@@ -1,5 +1,6 @@
 export const siteInfo = {
   name: "Studio D02",
+  logo: "/logo.jpeg",
   tagline: "Architecture & Interior Design",
   location: "Nashik, Maharashtra",
   email: "info.studiod02@gmail.com",
