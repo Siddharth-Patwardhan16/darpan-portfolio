@@ -1,49 +1,27 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import type { ProjectCategory, ProjectStatus } from "@prisma/client"
+import {
+  getCatalogProjectBySlug,
+  getFeaturedProjects,
+  listCatalogProjects,
+  type ProjectCategory,
+} from "@/data/project-catalog"
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc"
 
 const categoryInput = z.enum(["RESIDENTIAL", "CULTURAL", "COMMERCIAL"])
 
-function categoryLabel(category: ProjectCategory) {
-  const labels: Record<ProjectCategory, string> = {
-    RESIDENTIAL: "Residential",
-    CULTURAL: "Cultural",
-    COMMERCIAL: "Commercial",
-  }
-
-  return labels[category]
-}
-
-function statusLabel(status: ProjectStatus) {
-  return status
-    .toLowerCase()
-    .split("_")
-    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
-    .join(" ")
-}
-
 export const projectRouter = createTRPCRouter({
-  featured: publicProcedure.query(async ({ ctx }) => {
-    const projects = await ctx.prisma.project.findMany({
-      where: { featured: true },
-      include: {
-        images: { orderBy: { sortOrder: "asc" }, take: 1 },
-      },
-      orderBy: { sortOrder: "asc" },
-      take: 3,
-    })
-
-    return projects.map((project) => ({
+  featured: publicProcedure.query(() => {
+    return getFeaturedProjects().map((project) => ({
       id: project.id,
       slug: project.slug,
       title: project.title,
       subtitle: project.subtitle,
       category: project.category,
-      categoryLabel: categoryLabel(project.category),
+      categoryLabel: project.categoryLabel,
       year: project.year,
       heroImageUrl: project.heroImageUrl,
-      thumbnailUrl: project.images[0]?.url ?? project.heroImageUrl,
+      thumbnailUrl: project.thumbnailUrl,
     }))
   }),
 
@@ -55,16 +33,8 @@ export const projectRouter = createTRPCRouter({
         })
         .optional(),
     )
-    .query(async ({ ctx, input }) => {
-      const projects = await ctx.prisma.project.findMany({
-        where: {
-          category: input?.category,
-        },
-        include: {
-          images: { orderBy: { sortOrder: "asc" }, take: 1 },
-        },
-        orderBy: [{ featured: "desc" }, { sortOrder: "asc" }],
-      })
+    .query(({ input }) => {
+      const projects = listCatalogProjects(input?.category as ProjectCategory | undefined)
 
       return projects.map((project) => ({
         id: project.id,
@@ -72,14 +42,14 @@ export const projectRouter = createTRPCRouter({
         title: project.title,
         subtitle: project.subtitle,
         category: project.category,
-        categoryLabel: categoryLabel(project.category),
+        categoryLabel: project.categoryLabel,
         year: project.year,
         location: project.location,
         sizeLabel: project.sizeLabel,
-        statusLabel: statusLabel(project.status),
+        statusLabel: project.statusLabel,
         summary: project.summary,
         heroImageUrl: project.heroImageUrl,
-        thumbnailUrl: project.images[0]?.url ?? project.heroImageUrl,
+        thumbnailUrl: project.thumbnailUrl,
       }))
     }),
 
@@ -89,13 +59,8 @@ export const projectRouter = createTRPCRouter({
         slug: z.string().min(1),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const project = await ctx.prisma.project.findUnique({
-        where: { slug: input.slug },
-        include: {
-          images: { orderBy: { sortOrder: "asc" } },
-        },
-      })
+    .query(({ input }) => {
+      const project = getCatalogProjectBySlug(input.slug)
 
       if (!project) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Project not found" })
@@ -107,11 +72,11 @@ export const projectRouter = createTRPCRouter({
         title: project.title,
         subtitle: project.subtitle,
         category: project.category,
-        categoryLabel: categoryLabel(project.category),
+        categoryLabel: project.categoryLabel,
         year: project.year,
         location: project.location,
         sizeLabel: project.sizeLabel,
-        statusLabel: statusLabel(project.status),
+        statusLabel: project.statusLabel,
         summary: project.summary,
         longDescription: project.longDescription,
         heroImageUrl: project.heroImageUrl,

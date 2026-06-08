@@ -574,6 +574,7 @@ textarea {
   display: none;
   pointer-events: none;
   z-index: 30;
+  background: var(--panel);
 }
 
 .hover-preview img {
@@ -1145,7 +1146,9 @@ textarea {
   .site-footer-right {
     text-align: right;
   }
-}.home-hero-slide-image {
+}
+
+.home-hero-slide-image {
   object-fit: cover;
 }
 
