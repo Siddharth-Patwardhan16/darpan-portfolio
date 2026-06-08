@@ -3,30 +3,7 @@
 import { useState } from "react"
 import { motion } from "motion/react"
 import { api } from "@/trpc/client"
-
-const offices = [
-  {
-    city: "Copenhagen",
-    address: "Strandgade 91\n1401 Copenhagen K\nDenmark",
-    phone: "+45 32 12 34 56",
-    email: "cph@normarch.com",
-    primary: true,
-  },
-  {
-    city: "Berlin",
-    address: "Brunnenstraße 12\n10119 Berlin\nGermany",
-    phone: "+49 30 123 4567",
-    email: "ber@normarch.com",
-    primary: false,
-  },
-  {
-    city: "Oslo",
-    address: "Tjuvholmen allé 11\n0252 Oslo\nNorway",
-    phone: "+47 21 98 76 54",
-    email: "osl@normarch.com",
-    primary: false,
-  },
-]
+import { siteInfo } from "@/data/site-info"
 
 export function ContactView() {
   const [formState, setFormState] = useState({
@@ -84,7 +61,7 @@ export function ContactView() {
                   setFormState({ name: "", email: "", type: "", message: "" })
                 }}
               >
-                ? Send another message
+                → Send another message
               </button>
             </div>
           ) : (
@@ -146,24 +123,26 @@ export function ContactView() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <p className="overline">Offices</p>
+          <p className="overline">Studio</p>
           <div className="office-list">
-            {offices.map((office) => (
-              <article key={office.city}>
-                <div>
-                  <p>{office.city}</p>
-                  {office.primary ? <span>HQ</span> : null}
-                </div>
-                <pre>{office.address}</pre>
-                <a href={`tel:${office.phone}`}>{office.phone}</a>
-                <a href={`mailto:${office.email}`}>{office.email}</a>
-              </article>
-            ))}
+            <article>
+              <div>
+                <p>{siteInfo.name}</p>
+              </div>
+              <pre>{siteInfo.address.join("\n")}</pre>
+              <a href={siteInfo.phoneHref}>{siteInfo.phone}</a>
+              <a href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a>
+            </article>
           </div>
 
           <div className="office-general">
-            <p className="overline">General Enquiries</p>
-            <a href="mailto:studio@normarch.com">studio@normarch.com</a>
+            <p className="overline">Follow</p>
+            <a href={siteInfo.social.instagram} target="_blank" rel="noreferrer">
+              Instagram
+            </a>
+            <a href={siteInfo.social.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
           </div>
         </motion.div>
       </div>

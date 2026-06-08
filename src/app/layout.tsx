@@ -19,9 +19,9 @@ const spaceMono = Space_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "NORM Studio — Minimalist Architecture Portfolio",
+  title: "Studio D02 — Architecture & Interior Design",
   description:
-    "Architecture, urban design, and interiors by NORM Studio across Copenhagen, Berlin, and Oslo.",
+    "Architecture and interior design by Studio D02 in Nashik, Maharashtra — residential, commercial, and hospitality projects.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

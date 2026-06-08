@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "motion/react"
+import { siteInfo } from "@/data/site-info"
 
 interface SiteFrameProps {
   children: ReactNode
@@ -36,7 +37,7 @@ export function SiteFrame({ children }: SiteFrameProps) {
       <header className={`site-header ${scrolled ? "site-header-scrolled" : ""}`}>
         <nav className="site-nav">
           <Link href="/" className="site-logo">
-            NORM Studio
+            {siteInfo.name}
           </Link>
 
           <div className="site-nav-desktop">
@@ -105,37 +106,34 @@ export function SiteFrame({ children }: SiteFrameProps) {
       <footer className="site-footer">
         <div className="site-footer-grid">
           <div>
-            <p className="site-footer-brand">NORM Studio</p>
-            <p className="site-footer-copy">Architecture & Urban Design</p>
-            <p className="site-footer-copy">Copenhagen — Berlin — Oslo</p>
+            <p className="site-footer-brand">{siteInfo.name}</p>
+            <p className="site-footer-copy">{siteInfo.tagline}</p>
+            <p className="site-footer-copy">{siteInfo.location}</p>
           </div>
 
           <div>
             <p className="site-footer-label">Contact</p>
-            <a href="mailto:studio@normarch.com" className="site-footer-link">
-              studio@normarch.com
+            <a href={`mailto:${siteInfo.email}`} className="site-footer-link">
+              {siteInfo.email}
             </a>
-            <a href="tel:+4532123456" className="site-footer-link">
-              +45 32 12 34 56
+            <a href={siteInfo.phoneHref} className="site-footer-link">
+              {siteInfo.phone}
             </a>
           </div>
 
           <div>
             <p className="site-footer-label">Follow</p>
-            <a href="#" className="site-footer-link">
+            <a href={siteInfo.social.instagram} target="_blank" rel="noreferrer" className="site-footer-link">
               Instagram
             </a>
-            <a href="#" className="site-footer-link">
+            <a href={siteInfo.social.linkedin} target="_blank" rel="noreferrer" className="site-footer-link">
               LinkedIn
-            </a>
-            <a href="#" className="site-footer-link">
-              Dezeen
             </a>
           </div>
 
           <div className="site-footer-right">
             <p>
-              © {new Date().getFullYear()} NORM Studio.
+              © {new Date().getFullYear()} {siteInfo.name}.
               <br />
               All rights reserved.
             </p>

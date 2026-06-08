@@ -103,7 +103,7 @@ export function HomeView() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          NORM Studio is a Copenhagen-based architecture practice working across scales — from intimate residences to civic infrastructure — guided by a belief in the enduring power of material honesty and spatial clarity.
+          Studio D02 is a Nashik-based architecture and interior design practice working across residential, commercial, and hospitality projects — guided by material honesty, spatial clarity, and designs built for everyday life.
         </motion.p>
       </section>
 

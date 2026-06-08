@@ -1,4 +1,4 @@
-# NORM Studio Portfolio
+# Studio D02 Portfolio
 
 Replicated from your Figma Make design using a production-ready stack.
 
