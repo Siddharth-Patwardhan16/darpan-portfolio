@@ -23,11 +23,16 @@ export const seoDefaults = {
     "Darpan Adhaoo",
   ],
   logoPath: "/logo.jpeg",
+  ogImagePath: "/opengraph-image",
   locale: "en_IN",
 } as const
 
 function absoluteUrl(path: string) {
   return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`
+}
+
+function isDefaultShareImage(image: string) {
+  return image === seoDefaults.logoPath || image === seoDefaults.ogImagePath
 }
 
 interface CreateMetadataOptions {
@@ -44,14 +49,27 @@ export function createMetadata({
   title,
   description = seoDefaults.description,
   path = "/",
-  image = seoDefaults.logoPath,
-  imageAlt = `${siteInfo.name} logo`,
+  image = seoDefaults.ogImagePath,
+  imageAlt = `${siteInfo.name} — ${siteInfo.tagline}`,
   keywords = [...seoDefaults.keywords],
   noIndex = false,
 }: CreateMetadataOptions = {}): Metadata {
   const pageTitle = title ? `${title} | ${siteInfo.name}` : seoDefaults.title
   const canonicalUrl = absoluteUrl(path)
-  const imageUrl = absoluteUrl(image)
+  const useGeneratedOgImage = isDefaultShareImage(image)
+  const imageUrl = useGeneratedOgImage ? absoluteUrl(seoDefaults.ogImagePath) : absoluteUrl(image)
+
+  const shareImages = useGeneratedOgImage
+    ? undefined
+    : [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: image.endsWith(".png") ? "image/png" : "image/jpeg",
+        },
+      ]
 
   return {
     title: pageTitle,
@@ -81,25 +99,13 @@ export function createMetadata({
       siteName: seoDefaults.siteName,
       title: pageTitle,
       description,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 1200,
-          alt: imageAlt,
-        },
-      ],
+      ...(shareImages ? { images: shareImages } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description,
-      images: [imageUrl],
-    },
-    icons: {
-      icon: [{ url: seoDefaults.logoPath, type: "image/jpeg" }],
-      apple: [{ url: seoDefaults.logoPath, type: "image/jpeg" }],
-      shortcut: [seoDefaults.logoPath],
+      ...(shareImages ? { images: [imageUrl] } : {}),
     },
   }
 }
@@ -112,7 +118,7 @@ export function createOrganizationJsonLd() {
     description: seoDefaults.description,
     url: getSiteUrl(),
     logo: absoluteUrl(seoDefaults.logoPath),
-    image: absoluteUrl(seoDefaults.logoPath),
+    image: absoluteUrl(seoDefaults.ogImagePath),
     email: siteInfo.email,
     telephone: siteInfo.phone,
     address: {
