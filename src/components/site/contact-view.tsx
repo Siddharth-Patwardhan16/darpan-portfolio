@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "motion/react"
 import { api } from "@/trpc/client"
 import { siteInfo } from "@/data/site-info"
+import { SocialLinks } from "@/components/site/social-links"
 
 export function ContactView() {
   const [formState, setFormState] = useState({
@@ -137,12 +138,7 @@ export function ContactView() {
 
           <div className="office-general">
             <p className="overline">Follow</p>
-            <a href={siteInfo.social.instagram} target="_blank" rel="noreferrer">
-              Instagram
-            </a>
-            <a href={siteInfo.social.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>
+            <SocialLinks className="contact-social" />
           </div>
         </motion.div>
       </div>

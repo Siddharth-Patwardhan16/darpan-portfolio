@@ -201,6 +201,46 @@ textarea {
   display: block;
 }
 
+.social-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.social-link + .social-link {
+  margin-top: 0;
+}
+
+.social-link-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.social-link:hover {
+  color: var(--fg);
+}
+
+.site-footer-social .social-link {
+  font-size: 12px;
+}
+
+.contact-social .social-link {
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 .container {
   padding: 0 24px;
 }
@@ -1048,11 +1088,8 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
-.office-general a {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 18px;
-  font-weight: 300;
+.office-general .contact-social {
+  margin-top: 4px;
 }
 
 .project-not-found,

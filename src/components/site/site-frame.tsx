@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "motion/react"
 import { siteInfo } from "@/data/site-info"
+import { SocialLinks } from "@/components/site/social-links"
 
 interface SiteFrameProps {
   children: ReactNode
@@ -125,12 +126,7 @@ export function SiteFrame({ children }: SiteFrameProps) {
 
           <div>
             <p className="site-footer-label">Follow</p>
-            <a href={siteInfo.social.instagram} target="_blank" rel="noreferrer" className="site-footer-link">
-              Instagram
-            </a>
-            <a href={siteInfo.social.linkedin} target="_blank" rel="noreferrer" className="site-footer-link">
-              LinkedIn
-            </a>
+            <SocialLinks className="site-footer-social" />
           </div>
 
           <div className="site-footer-right">
