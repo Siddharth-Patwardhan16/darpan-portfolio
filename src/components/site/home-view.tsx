@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { motion } from "motion/react"
 import { api } from "@/trpc/client"
+import { siteInfo } from "@/data/site-info"
 
 const heroSlides = [
   {
@@ -33,13 +34,6 @@ const expertise = [
   "Landscape",
   "Civic",
   "Residential",
-]
-
-const stats = [
-  { value: "2012", label: "Founded" },
-  { value: "48+", label: "Built Works" },
-  { value: "12", label: "Awards" },
-  { value: "3", label: "Offices" },
 ]
 
 export function HomeView() {
@@ -151,7 +145,7 @@ export function HomeView() {
       </section>
 
       <section className="stats-section">
-        {stats.map((item, index) => (
+        {siteInfo.stats.map((item, index) => (
           <motion.div key={item.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }}>
             <p className="mono stat-value">{item.value}</p>
             <p className="overline">{item.label}</p>

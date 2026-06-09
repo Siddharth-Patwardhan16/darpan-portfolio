@@ -16,4 +16,10 @@ export const siteInfo = {
     linkedin:
       "https://www.linkedin.com/in/darpan-adhaoo-89211a284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
   },
+  stats: [
+    { value: "2024", label: "Founded" },
+    { value: "6+", label: "Built Works" },
+    { value: "3", label: "Featured Works" },
+    { value: "1", label: "Studio" },
+  ],
 } as const

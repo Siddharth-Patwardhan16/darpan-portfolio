@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "motion/react"
+import { aboutImages } from "@/data/about-images"
 import { siteInfo } from "@/data/site-info"
 
 const team = [
@@ -10,8 +11,7 @@ const team = [
     name: "Darpan Adhaoo",
     role: "Founder & Principal Architect",
     bio: "Leads Studio D02 across residential, commercial, and hospitality interior projects in Nashik and beyond.",
-    image:
-      "https://images.unsplash.com/photo-1771814489248-3c56e346db77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=400",
+    image: aboutImages.leadership,
   },
 ]
 
@@ -29,8 +29,23 @@ export function AboutView() {
 
       <section className="about-hero-image">
         <div>
-          <Image src="https://images.unsplash.com/photo-1770892410981-8a6650aa9ee1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1920" alt="Studio D02" fill sizes="100vw" />
+          <Image src={aboutImages.hero} alt="D02 Lounge by Studio D02" fill sizes="100vw" />
         </div>
+      </section>
+
+      <section className="about-gallery">
+        {aboutImages.gallery.map((image, index) => (
+          <motion.div
+            key={image.src}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08 }}
+            className="about-gallery-item"
+          >
+            <Image src={image.src} alt={image.alt} fill sizes="(max-width: 767px) 100vw, 33vw" />
+          </motion.div>
+        ))}
       </section>
 
       <section className="about-columns">

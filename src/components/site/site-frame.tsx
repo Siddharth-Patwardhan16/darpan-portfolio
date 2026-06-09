@@ -37,9 +37,8 @@ export function SiteFrame({ children }: SiteFrameProps) {
     <div className="site-root">
       <header className={`site-header ${scrolled ? "site-header-scrolled" : ""}`}>
         <nav className="site-nav">
-          <Link href="/" className="site-logo" aria-label={`${siteInfo.name} home`}>
-            <Image src={siteInfo.logo} alt={siteInfo.name} width={40} height={40} priority />
-            <span>{siteInfo.name}</span>
+          <Link href="/" className="site-logo">
+            {siteInfo.name}
           </Link>
 
           <div className="site-nav-desktop">

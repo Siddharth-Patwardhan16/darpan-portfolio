@@ -80,19 +80,10 @@ textarea {
 }
 
 .site-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 500;
-}
-
-.site-logo img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
 }
 
 .site-footer-logo {
@@ -747,12 +738,30 @@ textarea {
 }
 
 .about-hero-image {
-  margin: 0 -24px 96px;
+  margin: 0 -24px 24px;
 }
 
 .about-hero-image img {
   width: 100%;
   aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+
+.about-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 72px;
+}
+
+.about-gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.about-gallery-item img {
   object-fit: cover;
 }
 
@@ -1129,6 +1138,11 @@ textarea {
   .project-gallery > div {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+  }
+
+  .about-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 
   .about-columns {
