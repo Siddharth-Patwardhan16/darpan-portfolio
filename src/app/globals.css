@@ -611,25 +611,6 @@ textarea {
   color: var(--muted);
 }
 
-.hover-preview {
-  position: fixed;
-  right: 48px;
-  bottom: 48px;
-  width: 288px;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  display: none;
-  pointer-events: none;
-  z-index: 30;
-  background: var(--panel);
-}
-
-.hover-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .project-hero {
   height: 100vh;
   position: relative;
@@ -736,8 +717,8 @@ textarea {
 
 .project-gallery img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 }
 
 .next-project {
@@ -1158,10 +1139,6 @@ textarea {
     display: none;
   }
 
-  .hover-preview {
-    display: block;
-  }
-
   .project-hero-content,
   .project-back-link {
     left: 48px;
@@ -1242,10 +1219,89 @@ textarea {
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--panel);
+  border: none;
+  padding: 0;
+  width: 100%;
+  cursor: zoom-in;
 }
 
 .project-gallery-item img {
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.project-image-trigger {
+  display: block;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.project-hero-media.project-image-trigger {
+  width: 100%;
+  height: 100%;
+}
+
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 17, 17, 0.92);
+}
+
+.project-lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 1400px);
+  height: min(100%, calc(100vh - 96px));
+}
+
+.project-lightbox-stage img {
+  max-width: 100%;
+  max-height: min(100%, calc(100vh - 96px));
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.project-lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: #ffffff;
+  padding: 10px 16px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.project-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(17, 17, 17, 0.45);
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.project-lightbox-prev {
+  left: 24px;
+}
+
+.project-lightbox-next {
+  right: 24px;
 }
 
 .about-hero-image > div {

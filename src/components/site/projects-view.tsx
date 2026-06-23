@@ -9,13 +9,11 @@ import { api } from "@/trpc/client"
 const categories = [
   { label: "All" },
   { label: "Residential", value: "RESIDENTIAL" as const },
-  { label: "Cultural", value: "CULTURAL" as const },
   { label: "Commercial", value: "COMMERCIAL" as const },
 ]
 
 export function ProjectsView() {
   const [activeCategory, setActiveCategory] = useState(categories[0])
-  const [hovered, setHovered] = useState<string | null>(null)
 
   const listInput = useMemo(() => {
     if (!activeCategory.value) {
@@ -26,8 +24,6 @@ export function ProjectsView() {
   }, [activeCategory])
 
   const { data } = api.project.list.useQuery(listInput)
-
-  const hoveredProject = data?.find((project) => project.id === hovered)
 
   return (
     <div className="projects-page">
@@ -55,13 +51,7 @@ export function ProjectsView() {
         <AnimatePresence mode="wait">
           <motion.div key={activeCategory.label} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
             {data?.map((project, index) => (
-              <Link
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                className="projects-row"
-                onMouseEnter={() => setHovered(project.id)}
-                onMouseLeave={() => setHovered(null)}
-              >
+              <Link key={project.id} href={`/projects/${project.slug}`} className="projects-row">
                 <span className="mono row-index">{String(index + 1).padStart(2, "0")}</span>
                 <span className="row-title">{project.title}</span>
                 <span className="row-category">{project.categoryLabel}</span>
@@ -87,14 +77,6 @@ export function ProjectsView() {
           </Link>
         ))}
       </div>
-
-      <AnimatePresence>
-        {hoveredProject ? (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }} className="hover-preview">
-            <Image src={hoveredProject.thumbnailUrl} alt="" fill sizes="288px" />
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </div>
   )
 }
