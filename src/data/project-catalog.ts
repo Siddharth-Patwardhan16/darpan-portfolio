@@ -21,40 +21,6 @@ export interface ProjectDefinition {
 
 export const projectDefinitions: ProjectDefinition[] = [
   {
-    slug: "d02-lounge",
-    title: "D02 Lounge",
-    subtitle: "Hospitality Interior",
-    category: "COMMERCIAL",
-    year: 2026,
-    location: "India",
-    sizeLabel: "—",
-    status: "COMPLETED",
-    summary:
-      "A lounge interior defined by layered lighting, rich material textures, and a warm, intimate atmosphere for evening hospitality.",
-    longDescription:
-      "D02 Lounge transforms a compact hospitality program into an immersive spatial experience. Custom seating, ambient lighting, and a refined material palette create distinct zones for conversation and relaxation while maintaining a cohesive visual identity throughout.",
-    tags: ["Commercial", "Hospitality", "Interior", "Lounge"],
-    featured: true,
-    sortOrder: 1,
-  },
-  {
-    slug: "elo-cafe",
-    title: "Elo Cafe",
-    subtitle: "Cafe Interior",
-    category: "COMMERCIAL",
-    year: 2026,
-    location: "India",
-    sizeLabel: "—",
-    status: "COMPLETED",
-    summary:
-      "A contemporary cafe interior balancing openness and warmth, designed for all-day dining and social gathering.",
-    longDescription:
-      "Elo Cafe brings together natural finishes, soft lighting, and flexible seating to support both quick visits and longer stays. The layout prioritizes flow and visibility while creating intimate pockets within the larger open plan.",
-    tags: ["Commercial", "Cafe", "Interior", "F&B"],
-    featured: true,
-    sortOrder: 2,
-  },
-  {
     slug: "kokan-home",
     title: "Kokan Home",
     subtitle: "Private Residence",
@@ -68,6 +34,40 @@ export const projectDefinitions: ProjectDefinition[] = [
     longDescription:
       "Kokan Home responds to its coastal context through a palette of natural materials, generous daylight, and carefully composed interior volumes. Each room is designed for comfort and clarity, with storage and circulation integrated seamlessly into the plan.",
     tags: ["Residential", "Interior", "Home"],
+    featured: true,
+    sortOrder: 1,
+  },
+  {
+    slug: "s1-63",
+    title: "S1 63",
+    subtitle: "Residential Interior",
+    category: "RESIDENTIAL",
+    year: 2026,
+    location: "India",
+    sizeLabel: "—",
+    status: "COMPLETED",
+    summary:
+      "A refined residential interior with custom joinery, balanced lighting, and a contemporary material palette.",
+    longDescription:
+      "S1 63 maximizes spatial efficiency through built-in storage, layered lighting, and a restrained finish palette. The design creates a sense of openness while defining clear zones for living, dining, and rest.",
+    tags: ["Residential", "Interior", "Apartment"],
+    featured: true,
+    sortOrder: 2,
+  },
+  {
+    slug: "d02-lounge",
+    title: "D02 Lounge",
+    subtitle: "Hospitality Interior",
+    category: "COMMERCIAL",
+    year: 2026,
+    location: "India",
+    sizeLabel: "—",
+    status: "COMPLETED",
+    summary:
+      "A lounge interior defined by layered lighting, rich material textures, and a warm, intimate atmosphere for evening hospitality.",
+    longDescription:
+      "D02 Lounge transforms a compact hospitality program into an immersive spatial experience. Custom seating, ambient lighting, and a refined material palette create distinct zones for conversation and relaxation while maintaining a cohesive visual identity throughout.",
+    tags: ["Commercial", "Hospitality", "Interior", "Lounge"],
     featured: true,
     sortOrder: 3,
   },
@@ -89,19 +89,19 @@ export const projectDefinitions: ProjectDefinition[] = [
     sortOrder: 4,
   },
   {
-    slug: "s1-63",
-    title: "S1 63",
-    subtitle: "Residential Interior",
-    category: "RESIDENTIAL",
+    slug: "elo-cafe",
+    title: "Elo Cafe",
+    subtitle: "Cafe Interior",
+    category: "COMMERCIAL",
     year: 2026,
     location: "India",
     sizeLabel: "—",
     status: "COMPLETED",
     summary:
-      "A refined residential interior with custom joinery, balanced lighting, and a contemporary material palette.",
+      "A contemporary cafe interior balancing openness and warmth, designed for all-day dining and social gathering.",
     longDescription:
-      "S1 63 maximizes spatial efficiency through built-in storage, layered lighting, and a restrained finish palette. The design creates a sense of openness while defining clear zones for living, dining, and rest.",
-    tags: ["Residential", "Interior", "Apartment"],
+      "Elo Cafe brings together natural finishes, soft lighting, and flexible seating to support both quick visits and longer stays. The layout prioritizes flow and visibility while creating intimate pockets within the larger open plan.",
+    tags: ["Commercial", "Cafe", "Interior", "F&B"],
     featured: false,
     sortOrder: 5,
   },
@@ -215,7 +215,7 @@ export function getFeaturedProjects() {
 export function listCatalogProjects(category?: ProjectCategory) {
   return getCatalogProjects()
     .filter((project) => !category || project.category === category)
-    .sort((a, b) => Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder)
+    .sort((a, b) => a.sortOrder - b.sortOrder)
 }
 
 export function getCatalogProjectBySlug(slug: string) {

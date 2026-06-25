@@ -7,23 +7,10 @@ import { motion } from "motion/react"
 import { api } from "@/trpc/client"
 import { siteInfo } from "@/data/site-info"
 
-const heroSlides = [
-  {
-    image: "/projects/d02-lounge/file_000000001378720789a2a03abe334edb.png",
-    label: "Selected Work — 2026",
-    title: "D02\nLounge",
-  },
-  {
-    image: "/projects/elo-cafe/file_000000000ba471f8bbe670156850f92d.png",
-    label: "Selected Work — 2026",
-    title: "Elo\nCafe",
-  },
-  {
-    image: "/projects/kokan-home/20260410_172747.jpg.jpeg",
-    label: "Selected Work — 2026",
-    title: "Kokan\nHome",
-  },
-]
+function formatHeroTitle(title: string) {
+  const [first, ...rest] = title.split(" ")
+  return rest.length > 0 ? `${first}\n${rest.join(" ")}` : first
+}
 
 const expertise = [
   "Architecture",
@@ -38,21 +25,34 @@ const expertise = [
 
 export function HomeView() {
   const [current, setCurrent] = useState(0)
+  const { data: projects } = api.project.list.useQuery()
   const { data: featured } = api.project.featured.useQuery()
 
+  const heroSlides =
+    projects?.map((project) => ({
+      slug: project.slug,
+      image: project.heroImageUrl,
+      label: `Selected Work — ${project.year}`,
+      title: formatHeroTitle(project.title),
+    })) ?? []
+
   useEffect(() => {
+    if (heroSlides.length === 0) {
+      return
+    }
+
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroSlides.length)
     }, 5000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [heroSlides.length])
 
   return (
     <div>
       <section className="home-hero">
         {heroSlides.map((slide, index) => (
-          <div key={slide.label} className={`home-hero-slide ${index === current ? "is-active" : ""}`}>
+          <div key={slide.slug} className={`home-hero-slide ${index === current ? "is-active" : ""}`}>
             <Image src={slide.image} alt="" fill priority={index === 0} sizes="100vw" className="home-hero-slide-image" />
             <div className="home-hero-mask" />
           </div>
@@ -81,7 +81,7 @@ export function HomeView() {
 
         <div className="home-hero-indicators">
           {heroSlides.map((slide, index) => (
-            <button key={slide.label} type="button" onClick={() => setCurrent(index)} className={index === current ? "is-active" : ""} />
+            <button key={slide.slug} type="button" onClick={() => setCurrent(index)} className={index === current ? "is-active" : ""} />
           ))}
         </div>
 
